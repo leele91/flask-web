@@ -3,11 +3,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('02.index.htm')
+    return render_template('08.carousel.htm')
 
-@ap.route('/welcome')
-def welcome():
-    return render_template('02.welcome.htm')
+@app.route('/table')
+def table():
+    return render_template('08.filterable_table.htm')
 
 if __name__ == '__main__':
     app.run(debug=True)
