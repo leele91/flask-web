@@ -1,50 +1,98 @@
 {% extends "08.bootstrap.htm" %}
 {% block title %}Carousel{% endblock %}
 {% block additional_head %}
-    <style>
-        /* Make the image fully responsive */
-        .carousel-inner img {
+<style>
+    /* Make the image fully responsive */
+    .carousel-inner img {
         width: 100%;
         height: 100%;
-        }
-    </style>
+    }
+</style>
 {% endblock %}
-{% block subtitle %}Bootstrap Carousel<i class="fas fa-heart"></i>{% endblock %}
-{% block content %}
-    <div id="demo" class="carousel slide" data-ride="carousel">
-        <ul class="carousel-indicators">
-            <li data-target="#demo" data-slide-to="0" class="active"></li>
-            <li data-target="#demo" data-slide-to="1"></li>
-            <li data-target="#demo" data-slide-to="2"></li>
+<!-- 네비바영역 -->
+{% block navbar %}
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="{{url_for('static', filename='img/hoseo2.png')}}" alt="logo" style="height: 50px;">
+    </a>
+    <ul class="navbar-nav">
+        <button class="btn btn-primary" type="submit"><i class="fas fa-home"></i>홈</button>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-home"></i>데이터 분석</a>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-home"></i>머신 러닝</a>
+
+    </ul>
+    <div class="navbar-collapse collapse w-10 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <i class="fas fa-cloud-showers-heavy" style="color: beige;"></i>
         </ul>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{{url_for('static', filename='img/la.jpg')}}" alt="Los Angeles" width="1100" height="500">
-                <div class="carousel-caption">
-                    <h3>Los Angeles</h3>
-                    <p>We had such a great time in LA!</p>
-                </div>   
-            </div>
-            <div class="carousel-item">
-                <img src="{{url_for('static', filename='img/chicago.jpg')}}" alt="Chicago" width="1100" height="500">
-                <div class="carousel-caption">
-                    <h3>Chicago</h3>
-                    <p>Thank you, Chicago!</p>
-                </div>   
-            </div>
-            <div class="carousel-item">
-                <img src="{{url_for('static', filename='img/ny.jpg')}}" alt="New York" width="1100" height="500">
-                <div class="carousel-caption">
-                    <h3>New York</h3>
-                    <p>We love the Big Apple!</p>
-                </div>   
+    </div>
+</nav>
+{% endblock %}
+<!-- 왼쪽 메뉴영역 -->
+{% block listgroup %}
+<div class="btn-group-vertical">
+    <button type="button" class="btn btn-link">회귀</button>
+    <button type="button" class="btn btn-link">감성분석</button>
+    <div class="btn-group">
+        <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+            분류
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Tablet</a>
+            <a class="dropdown-item" href="#">Smartphone</a>
+        </div>
+    </div>
+    <button type="button" class="btn btn-link">군집화</button>
+    <div class="btn-group">
+        <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+            팀 멤버
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Tablet</a>
+            <a class="dropdown-item" href="#">Smartphone</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<!-- 메인 가운데 이미지영역 -->
+{% block content %}
+<div id="demo" class="carousel slide" data-ride="carousel">
+    <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{{url_for('static', filename='img/la.jpg')}}" alt="Los Angeles" width="1100" height="500">
+            <div class="carousel-caption">
+                <h3>Los Angeles</h3>
+                <p>We had such a great time in LA!</p>
             </div>
         </div>
-        <a class="carousel-control-prev" href="#demo" data-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a class="carousel-control-next" href="#demo" data-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </a>
+        <div class="carousel-item">
+            <img src="{{url_for('static', filename='img/chicago.jpg')}}" alt="Chicago" width="1100" height="500">
+            <div class="carousel-caption">
+                <h3>Chicago</h3>
+                <p>Thank you, Chicago!</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{{url_for('static', filename='img/ny.jpg')}}" alt="New York" width="1100" height="500">
+            <div class="carousel-caption">
+                <h3>New York</h3>
+                <p>We love the Big Apple!</p>
+            </div>
+        </div>
     </div>
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>
 {% endblock %}
+{% block subtitle %}Bootstrap Carousel<i class="fas fa-heart"></i>{% endblock %}

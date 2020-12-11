@@ -1,8 +1,11 @@
-{% extends "08.bootstrap.htm" %}
+{% extends "08.bootstrap.htm" %} 
+
 {% block title %}Filterable Table{% endblock %}
+
 {% block subtitle %}
     Bootstrap Filterable Table <i class="fas fa-heart"></i>
 {% endblock %}
+
 {% block content %}
     <p>Type something in the input field to search the table for first names, last names or emails:</p>  
     <input class="form-control" id="myInput" type="text" placeholder="Search..">
@@ -41,6 +44,7 @@
     
     <p>Note that we start the search in tbody, to prevent filtering the table headers.</p>
 {% endblock %}
+
 {% block additional_body %}
     <script>
         $(document).ready(function(){
