@@ -1,4 +1,4 @@
-{% extends "09.base.html" %}
+{% extends "base.html" %}
 {% block weather %} {{ weather|safe() }} {% endblock %}
 {% block subtitle %}
     <strong>주가 예측</strong>
@@ -10,7 +10,7 @@
             <form action="/stock" method="POST">
                 <table class="table table-borderless">
                     <tr>
-                        <td rowspan="2" style="vertical-align: middle"><label for="code">종목 코드</label></td>
+                        <td rowspan="2" style="vertical-align: middle;"><label for="code">종목 코드</label></td>
                         <td>
                             <label class="form-check-label">
                                 <input type="radio" class="form-check-input" id="market" name="market" value="KS" checked>KOSPI

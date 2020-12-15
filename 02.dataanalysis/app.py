@@ -1,7 +1,7 @@
 from flask import Flask, render_template, session, request
 from fbprophet import Prophet
 from datetime import datetime, timedelta
-import os
+import os, folium, json
 import pandas as pd
 import pandas_datareader as pdr
 import matplotlib as mpl 
@@ -36,25 +36,51 @@ def before_first_request():
     for i in kosdaq.index:
         kosdaq_dict[kosdaq['종목코드'][i]] = kosdaq['기업명'][i]
 
-@app.before_request
-def before_request():
-    pass    # 모든 Get 요청을 처리하는 놈에 앞서서 공통적으로 뭔 일을 처리함
-
 @app.route('/')
 def index():
     menu = {'ho':1, 'da':0, 'ml':0, 'se':0, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':0}
-    return render_template('09.main.html', menu=menu, weather=get_weather_main())
+    return render_template('index.html', menu=menu, weather=get_weather_main())
 
-@app.route('/park')
+@app.route('/park', methods=['GET', 'POST'])
 def park():
     menu = {'ho':0, 'da':1, 'ml':0, 'se':1, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':0}
-    return render_template('09.main.html', menu=menu, weather=get_weather_main())
+    park_new = pd.read_csv('./static/data/park_info.csv')
+    if request.method == 'GET':
+        map = folium.Map(location=[37.5502, 126.982], zoom_start=11)
+        for i in park_new.index:
+            folium.CircleMarker([park_new.lat[i], park_new.lng[i]], 
+                                radius=int(park_new['size'][i]),
+                                tooltip=f"{park_new['공원명'][i]}({int(park_new.area[i])}㎡)",
+                                color='#3186cc', fill_color='#3186cc').add_to(map)
+        html_file = os.path.join(app.root_path, 'static/img/park.html')
+        map.save(html_file)
+        mtime = int(os.stat(html_file).st_mtime)
+        return render_template('park.html', menu=menu, weather=get_weather_main(),
+                                park_list=list(park_new['공원명'].values), mtime=mtime)
+    else:
+        park_name = request.form['name']
+        df = park_new[park_new['공원명'] == park_name].reset_index()
+        park_result = {'name':park_name, 'addr':df['공원주소'][0], 'area':df.area[0], 'desc':df['공원개요'][0]}
+        map = folium.Map(location=[37.5502, 126.982], zoom_start=11)
+        for i in park_new.index:
+            folium.CircleMarker([park_new.lat[i], park_new.lng[i]], 
+                                radius=int(park_new['size'][i]),
+                                tooltip=f"{park_new['공원명'][i]}({int(park_new.area[i])}㎡)",
+                                color='#3186cc', fill_color='#3186cc').add_to(map)
+        folium.CircleMarker([df.lat[0], df.lng[0]], radius=int(df['size'][0]),
+                                tooltip=f"{df['공원명'][0]}({int(df.area[0])}㎡)",
+                                color='crimson', fill_color='crimson').add_to(map)
+        html_file = os.path.join(app.root_path, 'static/img/park_res.html')
+        map.save(html_file)
+        mtime = int(os.stat(html_file).st_mtime)
+        return render_template('park_res.html', menu=menu, weather=get_weather_main(),
+                                park_result=park_result, mtime=mtime)
 
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
     menu = {'ho':0, 'da':1, 'ml':0, 'se':0, 'co':0, 'cg':0, 'cr':0, 'st':1, 'wc':0}
     if request.method == 'GET':
-        return render_template('10.stock.html', menu=menu, weather=get_weather_main(),
+        return render_template('stock.html', menu=menu, weather=get_weather_main(),
                                 kospi=kospi_dict, kosdaq=kosdaq_dict)
     else:
         market = request.form['market']
@@ -88,7 +114,7 @@ def stock():
         fig.savefig(img_file)
         mtime = int(os.stat(img_file).st_mtime)
 
-        return render_template('10.stock_res.html', menu=menu, weather=get_weather_main(), 
+        return render_template('stock_res.html', menu=menu, weather=get_weather_main(), 
                                 mtime=mtime, company=company, code=code)
 
 if __name__ == '__main__':
