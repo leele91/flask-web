@@ -29,3 +29,13 @@
         </div>
     </div>
 {% endblock %}
+{% block additional_body %}
+    <script>
+        $('#gu').on('input', function() {
+            $('#gubun2')[0].checked = true
+        });
+        $('#name').on('input', function() {
+            $('#gubun1')[0].checked = true
+        });
+    </script>
+{% endblock %}
