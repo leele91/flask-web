@@ -22,7 +22,7 @@
         <ul class="nav nav-pills mr-auto">
             <li class="nav-item mr-4">
                 <a class="nav-link {% if menu.ho %}active{% endif %}" 
-                   href="{% if menu.ho %}#{% else %}/{% endif %}">
+                    href="{% if menu.ho %}#{% else %}/{% endif %}">
                     <i class="fa fa-home"></i> Home
                 </a>
             </li>
@@ -44,14 +44,14 @@
             {% block weather %}{% endblock %}
         </div>
     </nav>
-
+<!-- 왼쪽 메뉴영역 -->
     <div class="container">
         <div class="row mt-3">
             <div class="col-2">
                 <ul class="nav flex-column nav-pills">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if menu.se %}active{% endif %}" 
-                           data-toggle="dropdown" href="#">서울특별시</a>
+                            data-toggle="dropdown" href="#">서울특별시</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/park">공원 현황</a>
                             <a class="dropdown-item" href="/park_gu/area">공원 비교</a>
@@ -62,7 +62,7 @@
                     <div class="dropdown-divider"></div>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if menu.co %}active{% endif %}" 
-                           data-toggle="dropdown" href="#">코로나-19</a>
+                            data-toggle="dropdown" href="#">코로나-19</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">전국</a>
                             <a class="dropdown-item" href="#">광역시도별</a>
@@ -72,7 +72,7 @@
                     <div class="dropdown-divider"></div>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if menu.cg %}active{% endif %}" 
-                           data-toggle="dropdown" href="#">카토그램</a>
+                            data-toggle="dropdown" href="#">카토그램</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">인구소멸위기</a>
                             <a class="dropdown-item" href="#">커피지수</a>
@@ -81,7 +81,7 @@
                     <div class="dropdown-divider"></div>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if menu.cr %}active{% endif %}" 
-                           data-toggle="dropdown" href="#">크롤링</a>
+                            data-toggle="dropdown" href="#">크롤링</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">샌드위치</a>
                             <a class="dropdown-item" href="#">주유소</a>
@@ -90,12 +90,12 @@
                     <div class="dropdown-divider"></div>
                     <li class="nav-item">
                         <a class="nav-link {% if menu.st %}active{% endif %}" 
-                           href="{% if menu.st %}#{% else %}/stock{% endif %}">주가 예측</a>
+                            href="{% if menu.st %}#{% else %}/stock{% endif %}">주가 예측</a>
                     </li>
                     <div class="dropdown-divider"></div>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if menu.wc %}active{% endif %}" 
-                           data-toggle="dropdown" href="#">워드 클라우드</a>
+                            data-toggle="dropdown" href="#">워드 클라우드</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">여친 선물</a>
                             <a class="dropdown-item" href="#">경제 뉴스</a>
