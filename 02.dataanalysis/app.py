@@ -7,14 +7,21 @@ import pandas as pd
 import pandas_datareader as pdr
 import matplotlib as mpl 
 import matplotlib.pyplot as plt 
+from my_util.weather import get_weather
+
 # 한글폰트 사용
 mpl.rc('font', family='Malgun Gothic')
 mpl.rc('axes', unicode_minus=False)
 
-from my_util.weather import get_weather
 app = Flask(__name__)
 app.secret_key = 'qwert12345'
 kospi_dict, kosdaq_dict = {}, {}
+
+# 로그인 
+with open('./logging.json', 'r') as file:
+    config = json.load(file)
+dictConfig(config)
+app.logger
 
 ''' with open('./logging.json', 'r') as file:
     config = json.load(file)
