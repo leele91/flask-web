@@ -111,20 +111,34 @@ def crime(option):
     geo_str = json.load(open('./static/data/skorea_municipalities_geo_simple.json',
                         encoding='utf8'))
 
-    option_dict = {'crime': '범죄', 'rape': '강간', 'rob': '강도', 'murder': '살인', 'thief':'절도', 'violence':'폭력'}
+    option_dict = {'crime': '범죄', 'rape': '강간', 'rob': '강도', 'murder': '살인', 'thief':'절도', 'violence':'폭력',
+                    'a_crime':'검거','a_rape':'강간검거율', 'a_rob':'강도검거율', 'a_murder':'살인검거율',
+                    'a_thief':'절도검거율', 'a_violence':'폭력검거율'}
     current_app.logger.debug(option_dict[option])
 
-    map = folium.Map(location=[37.5502, 126.982], zoom_start=11, tiles='Stamen Toner')
-    map.choropleth(geo_data = geo_str,
-                    data = crime[option_dict[option]],
-                    columns = [crime.index, crime[option_dict[option]]],
-                    fill_color = 'PuRd',
-                    key_on = 'feature.id')
+    map = folium.Map(location=[37.5502, 126.982], zoom_start=11)
 
-    for n in crime_gu.index:
-        folium.CircleMarker([crime_gu.lat[n], crime_gu.lng[n]], 
-                        radius= crime_gu['검거'][n]*10,
-                        color='#3186cc', fill_color='#3186cc').add_to(map)
+    if option in ['crime', 'rape', 'rob', 'murder', 'thief', 'violence']:
+        map.choropleth(geo_data = geo_str,
+                        data = crime[option_dict[option]],
+                        columns = [crime.index, crime[option_dict[option]]],
+                        fill_color = 'PuRd',
+                        key_on = 'feature.id')
+
+        for n in crime_gu.index:
+            folium.CircleMarker([crime_gu.lat[n], crime_gu.lng[n]], 
+                            radius= crime_gu['검거'][n]*10,
+                            color='#3186cc', fill_color='#3186cc').add_to(map)
+    else:
+        map.choropleth(geo_data = geo_str,
+                        data = crime[option_dict[option]],
+                        columns = [crime.index, crime[option_dict[option]]],
+                        fill_color = 'BuPu',
+                        key_on = 'feature.id')
+        for n in crime_gu.index:
+            folium.CircleMarker([crime_gu.lat[n], crime_gu.lng[n]], 
+                            radius= crime_gu['검거'][n]*10,
+                            color='#3232FF', fill_color='#EB3232').add_to(map) #  color='#3186cc': 테두리색 / fill_color="#fff", 채우기색
 
     html_file = os.path.join(current_app.root_path, 'static/img/crime.html')
     map.save(html_file)
