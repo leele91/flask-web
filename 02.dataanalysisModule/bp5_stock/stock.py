@@ -8,13 +8,17 @@ import pandas_datareader as pdr
 from my_util.weather import get_weather
 
 stock_bp = Blueprint('stock_bp', __name__) # 원래의 templates 위치에서
+
+# 주가정보 불러오기
 kospi_dict, kosdaq_dict = {}, {}
-kospi = pd.read_csv('./static/data/KOSPI.csv', dtype={'종목코드': str})
-for i in kospi.index:
-    kospi_dict[kospi['종목코드'][i]] = kospi['기업명'][i]
-kosdaq = pd.read_csv('./static/data/KOSDAQ.csv', dtype={'종목코드': str})
-for i in kosdaq.index:
-    kosdaq_dict[kosdaq['종목코드'][i]] = kosdaq['기업명'][i]
+@stock_bp.before_app_first_request
+def before_app_first_request():
+    kospi = pd.read_csv('./static/data/KOSPI.csv', dtype={'종목코드': str})
+    for i in kospi.index:
+        kospi_dict[kospi['종목코드'][i]] = kospi['기업명'][i]
+    kosdaq = pd.read_csv('./static/data/KOSDAQ.csv', dtype={'종목코드': str})
+    for i in kosdaq.index:
+        kosdaq_dict[kosdaq['종목코드'][i]] = kosdaq['기업명'][i]
 
 @stock_bp.route('/stock', methods=['GET', 'POST'])
 def stock():
