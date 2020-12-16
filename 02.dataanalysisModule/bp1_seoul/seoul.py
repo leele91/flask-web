@@ -95,9 +95,39 @@ def park_gu(option):
                         radius=int(park_new['size'][i]),
                         tooltip=f"{park_new['공원명'][i]}({int(park_new.area[i])}㎡)",
                         color='green', fill_color='green').add_to(map)
+
     html_file = os.path.join(current_app.root_path, 'static/img/park_gu.html')
     map.save(html_file)
     mtime = int(os.stat(html_file).st_mtime)
     option_dict = {'area':'공원면적', 'count':'공원수', 'area_ratio':'공원면적 비율', 'per_person':'인당 공원면적'}
     return render_template('seoul/park_gu.html', menu=menu, weather=get_weather(),
+                            option=option, option_dict=option_dict, mtime=mtime)
+
+@seoul_bp.route('/crime/<option>')
+def crime(option):
+    menu = {'ho':0, 'da':1, 'ml':0, 'se':1, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':0}
+    crime = pd.read_csv('./static/data/crime_anal_nrom_sort.csv', index_col='구별')
+    crime_gu = pd.read_csv('./static/data/범죄현황위도경도.csv')
+    geo_str = json.load(open('./static/data/skorea_municipalities_geo_simple.json',
+                        encoding='utf8'))
+
+    option_dict = {'crime': '범죄', 'rape': '강간', 'rob': '강도', 'murder': '살인', 'thief':'절도', 'violence':'폭력'}
+    current_app.logger.debug(option_dict[option])
+
+    map = folium.Map(location=[37.5502, 126.982], zoom_start=11, tiles='Stamen Toner')
+    map.choropleth(geo_data = geo_str,
+                    data = crime[option_dict[option]],
+                    columns = [crime.index, crime[option_dict[option]]],
+                    fill_color = 'PuRd',
+                    key_on = 'feature.id')
+
+    for n in crime_gu.index:
+        folium.CircleMarker([crime_gu.lat[n], crime_gu.lng[n]], 
+                        radius= crime_gu['검거'][n]*10,
+                        color='#3186cc', fill_color='#3186cc').add_to(map)
+
+    html_file = os.path.join(current_app.root_path, 'static/img/crime.html')
+    map.save(html_file)
+    mtime = int(os.stat(html_file).st_mtime)
+    return render_template('seoul/crime.html', menu=menu, weather=get_weather(),
                             option=option, option_dict=option_dict, mtime=mtime)

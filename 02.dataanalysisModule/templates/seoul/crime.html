@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>서울 범죄현황</strong> <small>- 각 범죄률</small>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="w-90 ml-5">
+        <iframe src="{{url_for('static', filename='img/crime.html', q=mtime)}}" frameborder="1" width="800"
+            height="500"></iframe>
+    </div>
+    <button class="btn btn-primary mt-3" style="margin-left: 20%;" onclick="location.href='/seoul/crime/crime'">범죄</button>
+    <button class="btn btn-primary mt-3" style="margin-left: 20%;" onclick="location.href='/seoul/crime/rape'">강간</button>
+    <button class="btn btn-primary mt-3" style="margin-left: 20%;" onclick="location.href='/seoul/crime/rob'">강도</button>
+    <button class="btn btn-primary mt-3" style="margin-left: 20%;" onclick="location.href='/seoul/crime/murder'">살인</button>
+    <button class="btn btn-primary mt-3" style="margin-left: 20%;" onclick="location.href='/seoul/crime/thief'">절도</button>
+    <button class="btn btn-primary mt-3" style="margin-left: 20%;" onclick="location.href='/seoul/crime/violence'">폭력</button>
+</div>
+{% endblock %}
