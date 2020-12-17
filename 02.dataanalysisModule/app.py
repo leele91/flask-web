@@ -1,22 +1,18 @@
-from flask import Flask, render_template, session, request
-from bp5_stock.stock import stock_bp
-from bp1_seoul.seoul import seoul_bp
+from flask import Flask, render_template, session, request, g
+from datetime import timedelta
 import os, folium, json, logging
 from logging.config import dictConfig
-import pandas as pd
-import pandas_datareader as pdr
-import matplotlib as mpl 
-import matplotlib.pyplot as plt 
+from bp1_seoul.seoul import seoul_bp
+from bp3_cartogram.carto import carto_bp
+from bp5_stock.stock import stock_bp
 from my_util.weather import get_weather
-
-# 한글폰트 사용
-mpl.rc('font', family='Malgun Gothic')
-mpl.rc('axes', unicode_minus=False)
 
 app = Flask(__name__)
 app.secret_key = 'qwert12345'
-app.register_blueprint(stock_bp, url_prefix='/stock')
+app.config['SESSION_COOKIE_PATH'] = '/'
 app.register_blueprint(seoul_bp, url_prefix='/seoul')
+app.register_blueprint(carto_bp, url_prefix='/cartogram')
+app.register_blueprint(stock_bp, url_prefix='/stock')
 
 # 로그인 
 with open('./logging.json', 'r') as file:
