@@ -21,6 +21,21 @@ def get_weather_main():
         current_app.permanent_session_lifetime = timedelta(minutes=60)
     return weather
 
+# 인구소멸지수
+@carto_bp.route('/pop/<option>')
+def population(option):
+    menu = {'ho':0, 'da':1, 'ml':0, 'se':0, 'co':0, 'cg':1, 'cr':0, 'st':0, 'wc':0}
+    df_pop = pd.read_csv('./static/data/population.csv')
+    column_dict = {'extinction': '소멸위기지역', 'g_extinction':'소멸비율'}
+    color_dict = {'extinction':'Blues', 'g_extinction': 'Greens'}
+
+    img_file = os.path.join(current_app.root_path, 'static/img/population.png') # 파일이름
+    dk.drawKorea(column_dict[option], df_pop, color_dict[option], img_file) # 소멸위기지역, df, 컬러, 이미지파일 전달
+    mtime = int(os.stat(img_file).st_mtime)
+    return render_template('cartogram/population.html', menu=menu, weather=get_weather(), 
+                                option=option, column_dict=column_dict, mtime=mtime)
+
+# 커피지수
 @carto_bp.route('/coffee', methods=['GET', 'POST'])
 def coffee():
     menu = {'ho':0, 'da':1, 'ml':0, 'se':0, 'co':0, 'cg':1, 'cr':0, 'st':0, 'wc':0}
