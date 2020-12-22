@@ -11,7 +11,7 @@ def change_date(x):
     return f'{y[0][:-1]}-{month}-{day}'
 
 def get_region_by_date(date):
-    with open('bp2_covid/key/Covid19key.txt', mode='r') as key_fd:
+    with open('bp2_covid/gov_data_api_key.txt', mode='r') as key_fd:
         govapi_key = key_fd.read(100)
     start_date = date.replace('-','')
     end_date = date.replace('-','')
@@ -60,7 +60,7 @@ def get_region_by_date(date):
     current_app.logger.info(f'{date} region data successfully inserted.')
 
 def get_agender_by_date(date):
-    with open('bp2_covid/key/Covid19key.txt', mode='r') as key_fd:
+    with open('bp2_covid/gov_data_api_key.txt', mode='r') as key_fd:
         govapi_key = key_fd.read(100)
     start_date = date.replace('-','')
     end_date = date.replace('-','')
