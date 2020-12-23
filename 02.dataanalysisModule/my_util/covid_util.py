@@ -11,7 +11,7 @@ def change_date(x):
     return f'{y[0][:-1]}-{month}-{day}'
 
 def get_region_by_date(date):
-    with open('./bp2_covid/key/Covid19_key.txt', mode='r') as key_fd:
+    with open('./bp2_covid/key/Covid19key.txt', mode='r') as key_fd:
         govapi_key = key_fd.read(100)
     start_date = date.replace('-','')
     end_date = date.replace('-','')
@@ -35,32 +35,33 @@ def get_region_by_date(date):
     for index, item in enumerate(items):
         if item_count > 30 and index >= int(item_count/2):
             break
-        stdDay = change_date(item.find('stdDay').string)
-        deathCnt = int(item.find('deathCnt').string) if item.find('deathCnt') else 0
-        defCnt = int(item.find('defCnt').string) if item.find('defCnt') else 0
+        createDt = item.find('createDt').string
         gubun = item.find('gubun').string
+        deathCnt = int(item.find('deathCnt').string) if item.find('deathCnt') else 0
         incDec = int(item.find('incDec').string)
         isolClearCnt = int(item.find('isolClearCnt').string) if item.find('isolClearCnt') else 0
+        stdDay = change_date(item.find('stdDay').string)
+        defCnt = int(item.find('defCnt').string) if item.find('defCnt') else 0
         isolIngCnt = int(item.find('isolIngCnt').string) if item.find('isolIngCnt') else 0
-        localOccCnt = int(item.find('localOccCnt').string) if item.find('localOccCnt') else 0
         overFlowCnt = int(item.find('overFlowCnt').string) if item.find('overFlowCnt') else 0
+        localOccCnt = int(item.find('localOccCnt').string) if item.find('localOccCnt') else 0
         qurRate = None
         if item.find('qurRate'):
             qur = item.find('qurRate').string
             if qur != None and qur.count('.') == 2:
                 qur = qur[:-1]
             #print(qur)
-            if qur != None and qur[0] in '0123456789':
+            if qur != None and qur[0] in '01234567891011':
                 qurRate = float(qur)
-    
-        params = [stdDay, deathCnt, defCnt, gubun, incDec, isolClearCnt, isolIngCnt, 
-                localOccCnt, overFlowCnt, qurRate]
+
+        params = [createDt[:10], gubun, deathCnt, incDec, isolClearCnt, qurRate, stdDay, defCnt, isolIngCnt, 
+                    overFlowCnt, localOccCnt]
         dm.write_region(params)
     
     current_app.logger.info(f'{date} region data successfully inserted.')
 
 def get_agender_by_date(date):
-    with open('./bp2_covid/key/Covid19_key.txt', mode='r') as key_fd:
+    with open('./bp2_covid/key/Covid19key.txt', mode='r') as key_fd:
         govapi_key = key_fd.read(100)
     start_date = date.replace('-','')
     end_date = date.replace('-','')

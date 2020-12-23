@@ -16,8 +16,8 @@ def write_region(params):
     conn = sqlite3.connect('./db/covid.db')
     cur = conn.cursor()
     #print(params)
-    sql = '''insert into region(stdDay, deathCnt, defCnt, gubun, incDec, isolClearCnt,
-             isolIngCnt, localOccCnt, overFlowCnt, qurRate) values(?,?,?,?,?,?,?,?,?,?);'''
+    sql = '''insert into region(createDt, gubun, deathCnt, incDec, isolClearCnt, qurRate,
+            stdDay, defCnt, isolIngCnt, overFlowCnt, localOccCnt) values(?,?,?,?,?,?,?,?,?,?,?);'''
     cur.execute(sql, params)
     conn.commit()
 
