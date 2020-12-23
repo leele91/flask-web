@@ -1,6 +1,6 @@
 from flask import Flask, render_template, session, request, g
 from datetime import timedelta
-import os, folium, json, logging
+import os, json, logging
 from logging.config import dictConfig
 from bp1_seoul.seoul import seoul_bp
 from bp2_covid.covid import covid_bp

@@ -37,14 +37,14 @@
         </tr>
         {% for row in rows %}
             <tr>
-                <td style="text-align: center;">{{row[4]}}</td>
                 <td style="text-align: right;">{{row[2]}}</td>
-                <td style="text-align: right;">{{'{:,}'.format(row[3])}}</td>
-                <td style="text-align: right;">{{'{:,}'.format(row[5])}}</td>
-                <td style="text-align: right;">{{'{:,}'.format(row[6])}}</td>
-                <td style="text-align: right;">{{'{:,}'.format(row[7])}}</td>
-                <td style="text-align: right;">{{'{:,}'.format(row[8])}}</td>
+                <td style="text-align: center;">{{row[3]}}</td>
+                <td style="text-align: right;">{{row[8]}}</td>
+                <td style="text-align: right;">{{row[4]}}</td>
+                <td style="text-align: right;">{{row[5]}}</td>
                 <td style="text-align: right;">{{row[9]}}</td>
+                <td style="text-align: right;">{{row[11]}}</td>
+                <td style="text-align: right;">{{row[10]}}</td>
             </tr>
         {% endfor %}
     </table>

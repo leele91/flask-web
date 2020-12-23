@@ -17,7 +17,7 @@ def write_region(params):
     cur = conn.cursor()
     #print(params)
     sql = '''insert into region(stdDay, deathCnt, defCnt, gubun, incDec, isolClearCnt,
-             isolIngCnt, localOccCnt, overFlowCnt, qurRate) values(?,?,?,?,?,?,?,?,?,?);'''
+            isolIngCnt, localOccCnt, overFlowCnt, qurRate) values(?,?,?,?,?,?,?,?,?,?);'''
     cur.execute(sql, params)
     conn.commit()
 
@@ -42,7 +42,7 @@ def write_agender(params):
     cur = conn.cursor()
     #print(params)
     sql = '''insert into agender(stdDay, confCase, confCaseRate, death, deathRate,
-             criticalRate, gubun, seq, updateDt) values(?,?,?,?,?,?,?,?,?);'''
+            criticalRate, gubun, seq, updateDt) values(?,?,?,?,?,?,?,?,?);'''
     cur.execute(sql, params)
     conn.commit()
 
