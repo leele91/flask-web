@@ -42,7 +42,7 @@ def write_agender(params):
     cur = conn.cursor()
     #print(params)
     sql = '''insert into agender(stdDay, confCase, confCaseRate, death, deathRate,
-             criticalRate, gubun, seq, updateDt) values(?,?,?,?,?,?,?,?,?);'''
+            criticalRate, gubun, seq, updateDt) values(?,?,?,?,?,?,?,?,?);'''
     cur.execute(sql, params)
     conn.commit()
 
