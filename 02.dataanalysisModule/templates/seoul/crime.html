@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block weather %} {{ weather|safe() }} {% endblock %}
 {% block subtitle %}
-<strong>서울 범죄현황</strong> <small>- 각 범죄률</small>
+<strong>서울 범죄현황</strong> <small>- 각 범죄율: {{option_dict[option]}}</small>
 {% endblock %}
 
 {% block content %}
