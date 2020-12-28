@@ -6,6 +6,15 @@ import os, folium, json, logging
 import pandas as pd
 import pandas_datareader as pdr
 from my_util.weather import get_weather
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+
+## 한글 폰트 사용
+# 폰트 설정
+mpl.rc('font', family='Malgun Gothic') #family에 사용할 폰트를 넣음
+# 유니코드에서  음수 부호설정
+mpl.rc('axes', unicode_minus=False)
 
 seoul_bp = Blueprint('seoul_bp', __name__)
 
@@ -145,3 +154,34 @@ def crime(option):
     mtime = int(os.stat(html_file).st_mtime)
     return render_template('seoul/crime.html', menu=menu, weather=get_weather(),
                             option=option, option_dict=option_dict, mtime=mtime)
+
+@seoul_bp.route('/cctv')
+def cctv():
+    menu = {'ho':0, 'da':1, 'ml':0, 'se':1, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':0}
+    dst = pd.read_csv('./static/data/cctv_인구수.csv', index_col='구별')
+    df_sort = dst.sort_values('오차', ascending=False)
+    
+    fp1 = np.polyfit(dst['인구수'], dst['소계'], 1)
+    fx = np.array([100000, 700000])
+    f1 = np.poly1d(fp1)
+    fy = f1(fx)
+
+    plt.figure(figsize=(14,10))
+    plt.scatter(dst['인구수'], dst['소계'], c=dst['오차'], s=50)
+    plt.plot(fx, fy, ls='dashed', lw=3, color='g')
+
+    for i in range(10): 
+        plt.text(df_sort['인구수'][i]*1.02, df_sort['소계'][i]*0.98,
+                df_sort.index[i], fontsize=15)
+
+    plt.grid(True)
+    plt.title('인구수와 CCTV 댓수의 관계', fontsize=20)
+    plt.xlabel('인구수')
+    plt.ylabel('CCTV')
+    plt.colorbar()
+    img_file = os.path.join(current_app.root_path, 'static/img/cctv.png')
+    plt.savefig(img_file)
+    mtime = int(os.stat(img_file).st_mtime)
+    
+    return render_template('seoul/cctv_res.html', menu=menu, weather=get_weather(),
+                            mtime=mtime)
