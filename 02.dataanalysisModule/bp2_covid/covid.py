@@ -112,7 +112,7 @@ def age_seq():
         rows = dm.get_agender_items_by_gubun_with_date('stdDay, confCase', '0-9', start_date, end_date)
         adf = pd.DataFrame(rows, columns=['기준일','0-9'])
         adf = cu.get_daily(adf, '0-9', '0-9세')
-        age_dict = {'0-9':'0-9세', '10-19':'10-19세', '20-29':'20-29세', '30-39':'30-39세', '40-49':'40-49세',
+        age_dict = {'0-9':'0-9', '10-19':'10-19세', '20-29':'20-29세', '30-39':'30-39세', '40-49':'40-49세',
                     '50-59':'50-59세', '60-69':'60-69세', '70-79':'70-79세', '80 이상':'80세이상'}
         for key, value in age_dict.items():
             rows = dm.get_agender_items_by_gubun_with_date('stdDay, confCase', key, start_date, end_date)
