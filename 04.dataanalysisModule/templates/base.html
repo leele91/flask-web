@@ -97,11 +97,6 @@
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
-                    <li class="nav-item">
-                        <a class="nav-link {% if menu.st %}active{% endif %}" 
-                            href="{% if menu.st %}#{% else %}/stock/stock{% endif %}">주가 예측</a>
-                    </li>
-                    <div class="dropdown-divider"></div>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if menu.wc %}active{% endif %}" 
                             data-toggle="dropdown" href="#">워드 클라우드</a>
@@ -110,6 +105,53 @@
                             <a class="dropdown-item" href="#">경제 뉴스</a>
                             <a class="dropdown-item" href="wordcloud/sports_news">스포츠 뉴스</a>
                         </div>
+                    </li>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider"></div>
+                    <li class="nav-item">
+                        <a class="nav-link {% if menu.st %}active{% endif %}" 
+                            href="{% if menu.st %}#{% else %}/stock/stock{% endif %}">주가 예측</a>
+                    </li>
+                    <div class="dropdown-divider"></div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if menu.wc %}active{% endif %}" 
+                            data-toggle="dropdown" href="#">분류</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item disabled" href="#">이진 분류</a>
+                            <a class="dropdown-item ml-2" href="#">- 타이타닉</a>
+                            <a class="dropdown-item ml-2" href="#">- 피마 인디언</a>
+                            <a class="dropdown-item ml-2" href="#">- 유방암</a>
+                            <a class="dropdown-item disabled" href="#">다중 분류</a>
+                            <a class="dropdown-item ml-2" href="#">- 아이리스</a>
+                            <a class="dropdown-item ml-2" href="#">- 와인</a>
+                        </div>
+                    </li>
+                    <div class="dropdown-divider"></div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if menu.wc %}active{% endif %}" 
+                            data-toggle="dropdown" href="#">고급 분류</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item disabled" href="#">감성 분석</a>
+                            <a class="dropdown-item ml-2" href="#">- 네이버 영화평</a>
+                            <a class="dropdown-item ml-2" href="#">- IMDB 영화평</a>
+                            <a class="dropdown-item ml-2" href="#">- 뉴스그룹 분류</a>
+                            <a class="dropdown-item ml-2" href="#">- MNIST 손글씨 분류</a>
+                        </div>
+                    </li>
+                    <div class="dropdown-divider"></div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if menu.wc %}active{% endif %}" 
+                            data-toggle="dropdown" href="#">회귀</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">당뇨병 BMI</a>
+                            <a class="dropdown-item" href="#">아이리스</a>
+                            <a class="dropdown-item" href="#">주가예측</a>
+                        </div>
+                    </li>
+                    <div class="dropdown-divider"></div>
+                    <li class="nav-item">
+                        <a class="nav-link {% if menu.st %}active{% endif %}" 
+                            href="{% if menu.st %}#{% else %}#{% endif %}">군집화/PCA</a>
                     </li>
                     <div class="dropdown-divider"></div>
                 </ul>
