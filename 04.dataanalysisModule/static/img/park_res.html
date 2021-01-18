@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_8683470e023c4f00994ad29b3f7d62cd {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_8683470e023c4f00994ad29b3f7d62cd" ></div>
+        
+</body>
+<script>    
+    
+            var map_8683470e023c4f00994ad29b3f7d62cd = L.map(
+                "map_8683470e023c4f00994ad29b3f7d62cd",
+                {
+                    center: [37.54528157689335, 127.15158637286656],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_1f20c32110a94cc0aafbbb8a28f596c4 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_8683470e023c4f00994ad29b3f7d62cd);
+        
+    
+            var circle_marker_70fefb3a82af43f7b712be726e62a9f9 = L.circleMarker(
+                [37.5390660422084, 127.153328745828],
+                {"bubblingMouseEvents": true, "color": "#3186cc", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3186cc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_8683470e023c4f00994ad29b3f7d62cd);
+        
+    
+            circle_marker_70fefb3a82af43f7b712be726e62a9f9.bindTooltip(
+                `<div>
+                     길동생태공원(80683㎡)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_57cde3873aa0446a98071d967bcd68d1 = L.circleMarker(
+                [37.5503003119836, 127.14710389039],
+                {"bubblingMouseEvents": true, "color": "#3186cc", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3186cc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_8683470e023c4f00994ad29b3f7d62cd);
+        
+    
+            circle_marker_57cde3873aa0446a98071d967bcd68d1.bindTooltip(
+                `<div>
+                     샛마을근린공원(11467㎡)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ef4300df4fb24f1681859674b37b2cb9 = L.circleMarker(
+                [37.543947672756296, 127.12553837870199],
+                {"bubblingMouseEvents": true, "color": "#3186cc", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3186cc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_8683470e023c4f00994ad29b3f7d62cd);
+        
+    
+            circle_marker_ef4300df4fb24f1681859674b37b2cb9.bindTooltip(
+                `<div>
+                     천호근린공원(26696㎡)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_db6f5b530e7240e4991f5955ce567034 = L.circleMarker(
+                [37.561467673118294, 127.164932597739],
+                {"bubblingMouseEvents": true, "color": "#3186cc", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3186cc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_8683470e023c4f00994ad29b3f7d62cd);
+        
+    
+            circle_marker_db6f5b530e7240e4991f5955ce567034.bindTooltip(
+                `<div>
+                     동명근린공원(99599㎡)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ec74d6bac4e24b42bfcad3ddd899d948 = L.circleMarker(
+                [37.5517582803975, 127.164598403887],
+                {"bubblingMouseEvents": true, "color": "#3186cc", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3186cc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 21, "stroke": true, "weight": 3}
+            ).addTo(map_8683470e023c4f00994ad29b3f7d62cd);
+        
+    
+            circle_marker_ec74d6bac4e24b42bfcad3ddd899d948.bindTooltip(
+                `<div>
+                     명일근린공원(649709㎡)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_d6d18772557640a388b2bba1289cd8a4 = L.circleMarker(
+                [37.5330196344931, 127.151356340452],
+                {"bubblingMouseEvents": true, "color": "#3186cc", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3186cc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 21, "stroke": true, "weight": 3}
+            ).addTo(map_8683470e023c4f00994ad29b3f7d62cd);
+        
+    
+            circle_marker_d6d18772557640a388b2bba1289cd8a4.bindTooltip(
+                `<div>
+                     일자산도시자연공원(632733㎡)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_9690477a42f8457581c59f1d9a1dfd4b = L.circleMarker(
+                [37.5374114232963, 127.15424625306801],
+                {"bubblingMouseEvents": true, "color": "#3186cc", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3186cc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_8683470e023c4f00994ad29b3f7d62cd);
+        
+    
+            circle_marker_9690477a42f8457581c59f1d9a1dfd4b.bindTooltip(
+                `<div>
+                     허브천문공원(25500㎡)
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>
