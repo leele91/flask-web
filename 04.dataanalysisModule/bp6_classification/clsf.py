@@ -40,10 +40,14 @@ def cancer():
         lrc = joblib.load('static/model/cancer_lr.pkl')
         svc = joblib.load('static/model/cancer_sv.pkl')
         dtc = joblib.load('static/model/cancer_dt.pkl')
+        rfc = joblib.load('static/model/cancer_rf.pkl')
+        knc = joblib.load('static/model/cancer_kn.pkl')
         pred_lr = lrc.predict(test_data)
         pred_sv = svc.predict(test_data)
         pred_dt = dtc.predict(test_data)
+        pred_rf = rfc.predict(test_data)
+        pred_kn = knc.predict(test_data)
         # print(label, pred_lr[0], pred_sv[0], pred_dt[0])
-        option_dict = {'label':label, 'pred_lr':pred_lr[0], 'pred_sv':pred_sv[0], 'pred_dt':pred_dt[0]}
+        option_dict = {'label':label, 'pred_lr':pred_lr[0], 'pred_sv':pred_sv[0], 'pred_dt':pred_dt[0], 'pred_rf': pred_rf[0], 'pred_kn': pred_kn[0]}
         return render_template('classification/cancer_res.html', menu=menu, weather=get_weather(), option_dict=option_dict)
             
