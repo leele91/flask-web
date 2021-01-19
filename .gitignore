@@ -9,6 +9,7 @@ Covid19_key.txt
 Covid19key.txt
 t.html
 covid.db
+model/
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
 
