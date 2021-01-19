@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>유방암 이진 분류</strong>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <table class="table table-hover">
+            <tr>
+                <th>목록</th>
+                <th>결과</th>
+            </tr>
+            <tr>
+                <td>label</td>
+                <td>{{option_dict.label}}</td>
+            </tr>
+            <tr>
+                <td>Logistic Regression</td>
+                <td>{{option_dict.pred_lr}}</td>
+            </tr>
+            <tr>
+                <td>Decision Tree</td>
+                <td>{{option_dict.pred_sv}}</td>
+            </tr>
+            <tr>
+                <td>Support Vector Machine</td>
+                <td>{{option_dict.pred_dt}}</td>
+            </tr>
+    </div>
+    <div class="col-2"></div>
+</div>
+{% endblock %}
