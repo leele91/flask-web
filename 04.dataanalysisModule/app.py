@@ -6,8 +6,8 @@ from bp1_seoul.seoul import seoul_bp
 from bp2_covid.covid import covid_bp
 from bp3_cartogram.carto import carto_bp
 from bp4_crawling.crawl import crawl_bp
-from bp5_stock.stock import stock_bp
-from bp6_wordcloud.word import word_bp
+from bp5_wordcloud.word import word_bp
+from bp8_stock.stock import stock_bp
 from my_util.weather import get_weather
 
 app = Flask(__name__)
@@ -17,8 +17,8 @@ app.register_blueprint(seoul_bp, url_prefix='/seoul')
 app.register_blueprint(covid_bp, url_prefix='/covid')
 app.register_blueprint(carto_bp, url_prefix='/cartogram')
 app.register_blueprint(crawl_bp, url_prefix='/crawling')
-app.register_blueprint(stock_bp, url_prefix='/stock')
 app.register_blueprint(word_bp, url_prefix='/wordcloud')
+app.register_blueprint(stock_bp, url_prefix='/stock')
 
 # 로그인 
 with open('./logging.json', 'r') as file:
@@ -41,7 +41,9 @@ def get_weather_main():
 
 @app.route('/')
 def index():
-    menu = {'ho':1, 'da':0, 'ml':0, 'se':0, 'co':0, 'cg':0, 'cr':0, 'st':0, 'wc':0}
+    menu = {'ho':1, 'da':0, 'ml':0, 
+            'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
+            'cf':0, 'ac':0, 're':0, 'cu':0, 'st':0}
     return render_template('index.html', menu=menu, weather=get_weather_main())
 
 
