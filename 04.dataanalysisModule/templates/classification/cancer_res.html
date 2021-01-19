@@ -22,12 +22,26 @@
                 <td>{{option_dict.pred_lr}}</td>
             </tr>
             <tr>
-                <td>Decision Tree</td>
+                <td>Support Vector Machine</td>
                 <td>{{option_dict.pred_sv}}</td>
             </tr>
             <tr>
-                <td>Support Vector Machine</td>
+                <td>Decision Tree</td>
                 <td>{{option_dict.pred_dt}}</td>
+            </tr>
+            <tr>
+                <td>랜덤 포레스트(Random Forest)</td>
+                <td>{{option_dict.pred_rf}}</td>
+            </tr>
+            <tr>
+                <td>K 최근접 이웃</td>
+                <td>{{option_dict.pred_kn}}</td>
+            </tr>
+            <tr>
+                <td align=center colspan="2" style="text-align: center;">
+                    <button class="btn btn-outline-warning"
+                        onclick="location.href='/classification/cancer'">재실행</button>
+                </td>
             </tr>
     </div>
     <div class="col-2"></div>
