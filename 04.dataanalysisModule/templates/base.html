@@ -114,7 +114,7 @@
                     </li>
                     <div class="dropdown-divider"></div>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if menu.wc %}active{% endif %}" 
+                        <a class="nav-link dropdown-toggle {% if menu.cf %}active{% endif %}" 
                             data-toggle="dropdown" href="#">분류</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item disabled" href="#">이진 분류</a>
@@ -128,7 +128,7 @@
                     </li>
                     <div class="dropdown-divider"></div>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if menu.wc %}active{% endif %}" 
+                        <a class="nav-link dropdown-toggle {% if menu.ac %}active{% endif %}" 
                             data-toggle="dropdown" href="#">고급 분류</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item disabled" href="#">감성 분석</a>
@@ -140,18 +140,18 @@
                     </li>
                     <div class="dropdown-divider"></div>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if menu.wc %}active{% endif %}" 
+                        <a class="nav-link dropdown-toggle {% if menu.re %}active{% endif %}" 
                             data-toggle="dropdown" href="#">회귀</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">당뇨병 BMI</a>
                             <a class="dropdown-item" href="#">아이리스</a>
-                            <a class="dropdown-item" href="#">주가예측</a>
+                            <a class="dropdown-item" href="/stock/stock">주가예측</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
                     <li class="nav-item">
-                        <a class="nav-link {% if menu.st %}active{% endif %}" 
-                            href="{% if menu.st %}#{% else %}#{% endif %}">군집화/PCA</a>
+                        <a class="nav-link {% if menu.cu %}active{% endif %}" 
+                            href="{% if menu.cu %}#{% else %}#{% endif %}">군집화/PCA</a>
                     </li>
                     <div class="dropdown-divider"></div>
                 </ul>
