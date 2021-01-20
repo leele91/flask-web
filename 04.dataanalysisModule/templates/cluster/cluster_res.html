@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>군집화/PCA</strong>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <table class="table table-borderless">
+            <tr class="table-primary">
+                <td>군집수(k)</td>
+                <td>{{k_number}}</td>
+            </tr>
+            <tr>
+                <td>차원축소(PCA)</td>
+                <td>K-Means Clustering</td>
+            </tr>
+        </table>
+
+        <table class="table table-borderless">
+            <tr>
+                <td><img src="{{url_for('static', filename='img/cluster0.png', q=mtime)}}"
+                        style="width:auto; height:300px" alt="군집화이미지"></td>
+                <td><img src="{{url_for('static', filename='img/cluster1.png', q=mtime)}}"
+                        style="width:auto; height:300px" alt="군집화이미지"></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <button class="btn btn-outline-success"
+                        onclick="location.href='/clustering/cluster'">재실행</button>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</div>
+{% endblock %}
