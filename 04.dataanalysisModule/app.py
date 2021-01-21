@@ -8,7 +8,7 @@ from bp3_cartogram.carto import carto_bp
 from bp4_crawling.crawl import crawl_bp
 from bp5_wordcloud.word import word_bp
 from bp6_classification.clsf import clsf_bp
-from bp8_stock.stock import stock_bp
+from bp8_regression.stock import stock_bp
 from bp9_clustering.clus import clus_bp
 from my_util.weather import get_weather
 
