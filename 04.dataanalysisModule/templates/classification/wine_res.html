@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>와인 다중 분류 결과</strong>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <table class="table table-hover">
+            <tr>
+                <th>목록</th>
+                <th>결과</th>
+            </tr>
+            <tr>
+                <td>레이블</td>
+                <td>{{wine_dict.label}}</td>
+            </tr>
+            <tr>
+                <td>Logistic Regression</td>
+                <td>{{wine_dict.pred_lr}}</td>
+            </tr>
+            <tr>
+                <td>Support Vector Machine</td>
+                <td>{{wine_dict.pred_sv}}</td>
+            </tr>
+            <tr>
+                <td>Decision Tree</td>
+                <td>{{wine_dict.pred_dt}}</td>
+            </tr>
+            <tr>
+                <td>랜덤 포레스트(Random Forest)</td>
+                <td>{{wine_dict.pred_rf}}</td>
+            </tr>
+            <tr>
+                <td>K 최근접 이웃</td>
+                <td>{{wine_dict.pred_kn}}</td>
+            </tr>
+            <tr>
+                <td align=center colspan="2" style="text-align: center;">
+                    <button class="btn btn-outline-warning"
+                        onclick="location.href='/classification/wine'">재실행</button>
+                </td>
+            </tr>
+    </div>
+    <div class="col-2"></div>
+</div>
+{% endblock %}
