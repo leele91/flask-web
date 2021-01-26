@@ -9,6 +9,7 @@ from my_util.weather import get_weather
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
+# import my_util.covid_util as cu
 
 ## 한글 폰트 사용
 # 폰트 설정
@@ -193,3 +194,8 @@ def cctv():
     
     return render_template('seoul/cctv_res.html', menu=menu, weather=get_weather(),
                             mtime=mtime)
+                            
+""" @covid_bp.route('/seoul_db_update')
+def seoul_db_update():
+    cu.get_new_seoul_data()
+    return redirect(url_for('covid_bp.seoul_seq')) """
