@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>당뇨병 회귀</strong>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <form action="/regression/diabetes" method="post">
+            <table class="table table-borderless">
+                <tr>
+                    <td><label for="index">테스트 데이터셋 인덱스</label></td>
+                    <td><input type="text" class="form-control" placeholder="0~110 사이의 값" id="index" name="index"></td>
+                </tr>
+                <tr>
+                    <td>피쳐 선택</td>
+                    <td>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="feature" name="feature" value="age"
+                                    checked>AGE
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="feature" name="feature" value="bmi"
+                                    checked>BMI
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="feature" name="feature" value="bp"
+                                    checked>BP
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <button type="submit" class="btn btn-outline-success mr-2">실행</button>
+                        <button type="reset" class="btn btn-outline-secondary">취소</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="col-1"></div>
+</div>
+{% endblock %}

@@ -74,6 +74,7 @@
                             <a class="dropdown-item ml-2" href="/covid/seoul_seq">- 추이</a>
                             <a class="dropdown-item ml-2" href="/covid/seoul_comp">- 비교</a>
                             <a class="dropdown-item ml-2" href="/covid/seoul_map/ratio">- 지도</a>
+                            <a class="dropdown-item ml-2" href="/covid/seoul_db_update">- DB 갱신</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
@@ -133,11 +134,13 @@
                             data-toggle="dropdown" href="#">고급 분류</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item disabled" href="#">감성 분석</a>
-                            <a class="dropdown-item ml-2" href="#">- 네이버 영화평</a>
-                            <a class="dropdown-item ml-2" href="#">- IMDB 영화평</a>
+                            <a class="dropdown-item ml-2" href="#">- MNIST(Toy) 손글씨</a>
+                            <a class="dropdown-item ml-2" href="/advanced/digits">- MNIST 손글씨</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item ml-2" href="#">- 뉴스그룹 분류</a>
-                            <a class="dropdown-item ml-2" href="/advanced/digits">- MNIST 손글씨 분류</a>
+                            <a class="dropdown-item ml-2" href="#">- IMDB 영화평</a>
+                            <a class="dropdown-item ml-2" href="#">- 네이버 영화평</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item ml-2" href="#">- 20 뉴스그룹 분류</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
@@ -145,9 +148,9 @@
                         <a class="nav-link dropdown-toggle {% if menu.re %}active{% endif %}" 
                             data-toggle="dropdown" href="#">회귀</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">당뇨병 BMI</a>
+                            <a class="dropdown-item" href="/regression/diabetes">당뇨병</a>
                             <a class="dropdown-item" href="/regression/iris">아이리스</a>
-                            <a class="dropdown-item" href="#">보스톤 집값</a>
+                            <a class="dropdown-item" href="/regression/boston">보스턴 집값</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/stock/stock">주가예측</a>
                         </div>

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>보스턴 집값 다중 회귀 결과</strong>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <table class="table table-hover">
+            <tr>
+                <td>테스트 데이터셋 인덱스</td>
+                <td>{{res.index}}</td>
+            </tr>
+            <tr>
+                <td>선택된 Feature</td>
+                <td>{% for feature in res.feature %}
+                        {{feature}}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            
+            <tr>
+                <td>타겟 값</td>
+                <td>{{res.y}}</td>
+            </tr>
+            <tr>
+                <td>회귀 결과</td>
+                <td>{{res.pred}}</td>
+            </tr>
+            
+            <tr>
+                <td colspan="3" style="text-align: center;">
+                    <button class="btn btn-outline-warning" onclick="location.href='/regression/boston'">재실행</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-2"></div>
+</div>
+{% endblock %}
