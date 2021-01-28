@@ -68,6 +68,56 @@ def digits():
         return render_template('advanced/digits_res.html', menu=menu, mtime=mtime,
                                 result=result_dict, weather=get_weather())
 
+# IMDB 영화평 감상 
+@aclsf_bp.before_app_first_request
+def before_app_first_request():
+    global imdb_count_lr, imdb_tfidf_lr
+    imdb_count_lr = joblib.load('static/model/imdb_count_lr.pkl')
+    imdb_tfidf_lr = joblib.load('static/model/imdb_tfid_lr.pkl') 
+
+@aclsf_bp.route('/imdb', methods=['GET', 'POST'])
+def imdb():
+    menu = {'ho':0, 'da':0, 'ml':1, 
+            'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
+            'cf':0, 'ac':1, 're':0, 'cu':0, 'st':0}
+
+    if request.method == 'GET':
+        return render_template('advanced/imdb.html', menu=menu, weather=get_weather())
+    else:
+        # pass
+        test_data = []
+        label = '직접 확인'
+        if request.form['option'] == 'index':
+            index = int(request.form['index'])
+            df = pd.read_csv('static/data/imdb_test.csv')
+            test_data.append(df.review[index])
+            # label = f'{df.sentiment[index]}'
+            label = '(긍정)' if df.sentiment[index] else '(부정)'
+        else:
+            test_data.append(request.form['review'])
+        
+        pred_c_lr = imdb_count_lr.predict(test_data)
+        pred_t_lr = imdb_tfidf_lr.predict(test_data)
+        imdb_dict = {'label':label, 'pred_c_lr': pred_c_lr[0], 'pred_t_lr': pred_t_lr[0]}
+        return render_template('advanced/imdb_res.html', menu=menu, imdb=test_data[0],
+                                ies=imdb_dict, weather=get_weather())
+""" else:
+        test_data = []
+        label = '직접 확인'
+        if request.form['option'] == 'index':
+            index = int(request.form['index'])
+            df_test = pd.read_csv('static/data/IMDB_test.csv')
+            test_data.append(df_test.iloc[index, 0])
+            label = '긍정' if df_test.sentiment[index] else '부정'
+        else:
+            test_data.append(request.form['review'])
+
+        pred_cl = '긍정' if imdb_count_lr.predict(test_data)[0] else '부정'
+        pred_tl = '긍정' if imdb_tfidf_lr.predict(test_data)[0] else '부정'
+        result_dict = {'label':label, 'pred_cl':pred_cl, 'pred_tl':pred_tl}
+        return render_template('advanced/imdb_res.html', menu=menu, review=test_data[0],
+                                res=result_dict, weather=get_weather()) """
+
 # 20 뉴스그룹
 @aclsf_bp.before_app_first_request
 def before_app_first_request():
@@ -91,7 +141,7 @@ def news():
     if request.method == 'GET':
         return render_template('advanced/news.html', menu=menu, weather=get_weather())
     else:
-        pass
+        # pass
         index = int(request.form['index'])
         df = pd.read_csv('static/data/news/test.csv')
         label = f'{df.target[index]} ({target_names[df.target[index]]})'

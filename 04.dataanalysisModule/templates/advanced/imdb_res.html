@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>IMDB 영화평 고급분류 결과</strong>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <table class="table table-striped">
+            <tr class="table-info">
+                <td>테스트 데이터셋 인덱스</td>
+                <td>{{ies.label}}</td>
+            </tr>
+            <tr>
+                <td>CountVectorizer + 로지스틱 회귀 분류 결과</td>
+                <td><strong>{{ies.pred_c_lr}}
+                    {% if ies.pred_c_lr %}(긍정){% else %}(부정){% endif %}
+                </strong></td>
+            </tr>
+            <tr>
+                <td>TfidfVectorizer + 로지스틱 회귀 분류 결과</td>
+                <td><strong>{{ies.pred_t_lr}}
+                    {% if ies.pred_t_lr %}(긍정){% else %}(부정){% endif %}
+                </strong></td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align: center;">
+                    <button class="btn btn-info" onclick="location.href='/advanced/imdb'">재실행</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-1"></div>
+</div>
+{% endblock %}
