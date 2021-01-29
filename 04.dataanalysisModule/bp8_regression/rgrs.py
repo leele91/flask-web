@@ -36,7 +36,7 @@ def diabetes():
             return render_template('regression/diabetes.html', menu=menu, weather=get_weather())
     else:
         # pass
-        index = int(request.form['index'])
+        index = int(request.form['index'] or '0')
         feature_name = request.form['feature']
         df = pd.read_csv('static/data/diabetes_train.csv')
         X = df[feature_name].values.reshape(-1, 1)
@@ -49,7 +49,8 @@ def diabetes():
         df_test = pd.read_csv('static/data/diabetes_test.csv')
         X_test = df_test[feature_name][index]
         y_test = df_test.target[index]
-        pred = X_test * weight[0] + bias
+        # pred = X_test * weight[0] + bias
+        pred = np.round(X_test * weight[0] + bias, 2)
 
         # 시각화 
         y_min = np.min(X) * weight[0] + bias
@@ -80,7 +81,7 @@ def iris():
             return render_template('regression/iris.html', menu=menu, weather=get_weather())
     else:
         # pass
-        index = int(request.form['index'])
+        index = int(request.form['index'] or '0')
         feature_name = request.form['feature']
         column_dict = {'sl':'Sepal length', 'sw':'Sepal width', 
                         'pl':'Petal length', 'pw':'Petal width', 
@@ -123,7 +124,7 @@ def boston():
         return render_template('regression/boston.html', menu=menu, weather=get_weather(), feature_list=feature_list)
     else:
         # pass
-        index = int(request.form['index'])
+        index = int(request.form['index'] or '0')
         feature_list = request.form.getlist('feature')
         df = pd.read_csv('static/data/boston_train.csv')
         X = df[feature_list].values
