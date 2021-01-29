@@ -9,7 +9,7 @@ import pandas_datareader as pdr
 from my_util.weather import get_weather
 
 clsf_bp = Blueprint('clsf_bp', __name__)
-
+# 분류
 def get_weather_main():
     ''' weather = None
     try:
