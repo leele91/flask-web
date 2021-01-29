@@ -34,7 +34,7 @@ def digits():
         return render_template('advanced/digits.html', menu=menu, weather=get_weather())
     else:
         # pass
-        index = int(request.form['index'])
+        index = int(request.form['index'] or '0')
         index_list = list(range(index, index+5))
         digits = load_digits()
         df = pd.read_csv('static/data/digits_test.csv')
@@ -68,7 +68,7 @@ def digits():
         return render_template('advanced/digits_res.html', menu=menu, mtime=mtime,
                                 result=result_dict, weather=get_weather())
 
-# IMDB 영화평 감상 
+# IMDB 영화평 감상
 @aclsf_bp.before_app_first_request
 def before_app_first_request():
     global imdb_count_lr, imdb_tfidf_lr
@@ -88,7 +88,7 @@ def imdb():
         test_data = []
         label = '직접 확인'
         if request.form['option'] == 'index':
-            index = int(request.form['index'])
+            index = int(request.form['index'] or '0')
             df = pd.read_csv('static/data/imdb_test.csv')
             test_data.append(df.review[index])
             # label = f'{df.sentiment[index]}'
@@ -123,8 +123,8 @@ def imdb():
 def before_app_first_request():
     global news_count_lr, news_tfidf_lr, news_tfidf_sv
     news_count_lr = joblib.load('static/model/20news_count_lr.pkl')
-    news_tfidf_lr = joblib.load('static/model/20news_tfid_lr.pkl') 
-    news_tfidf_sv = joblib.load('static/model/20news_tfid_sv.pkl') 
+    news_tfidf_lr = joblib.load('static/model/20news_tfid_lr.pkl')
+    news_tfidf_sv = joblib.load('static/model/20news_tfid_sv.pkl')
 
 @aclsf_bp.route('/news', methods=['GET', 'POST'])
 def news():
@@ -142,7 +142,7 @@ def news():
         return render_template('advanced/news.html', menu=menu, weather=get_weather())
     else:
         # pass
-        index = int(request.form['index'])
+        index = int(request.form['index'] or '0')
         df = pd.read_csv('static/data/news/test.csv')
         label = f'{df.target[index]} ({target_names[df.target[index]]})'
         test_data = []
