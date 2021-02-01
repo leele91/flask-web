@@ -4,7 +4,8 @@ from fbprophet import Prophet
 from datetime import datetime, timedelta
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.datasets import load_digits
-import os, joblib
+from konlpy.tag import Okt
+import os, joblib, re
 import pandas as pd
 import matplotlib.pyplot as plt
 from my_util.weather import get_weather
@@ -117,6 +118,52 @@ def imdb():
         result_dict = {'label':label, 'pred_cl':pred_cl, 'pred_tl':pred_tl}
         return render_template('advanced/imdb_res.html', menu=menu, review=test_data[0],
                                 res=result_dict, weather=get_weather()) """
+
+# 네이버 영화평
+@aclsf_bp.before_app_first_request
+def before_app_first_request():
+    global naver_count_lr, naver_tfid_lr, naver_count_nb, naver_tfid_nb
+    naver_count_lr = joblib.load('static/model/naver_count_lr.pkl')
+    naver_count_nb = joblib.load('static/model/naver_count_nb.pkl')
+    naver_tfid_lr = joblib.load('static/model/naver_tfid_lr.pkl') 
+    naver_tfid_nb = joblib.load('static/model/naver_tfid_nb.pkl')
+
+@aclsf_bp.route('/naver', methods=['GET', 'POST'])
+def naver():
+    menu = {'ho':0, 'da':0, 'ml':1, 
+            'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
+            'cf':0, 'ac':1, 're':0, 'cu':0, 'st':0}
+
+    if request.method == 'GET':
+        return render_template('advanced/naver.html', menu=menu, weather=get_weather())
+    else:
+        # pass
+        if request.form['option'] == 'index':
+            index = int(request.form['index'] or '0')
+            df_test = pd.read_csv('static/data/naver/movie_test.tsv', sep='\t')
+            # test_data.append(df_test.document[index])
+            org_review = df_test.document[index]
+            # label = f'{df_test.sentiment[index]}'
+            label = '(긍정)' if df_test.label[index] else '(부정)'
+        else:
+            org_review = request.form['review']
+            label = '직접 확인'
+            # test_data.append(request.form['review'])
+        test_data = []
+        review = re.sub("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","", org_review)
+        okt = Okt()
+        stopwords = ['의','가','이','은','들','는','좀','잘','걍','과','도','를','으로','자','에','와','한','하다','을']
+        morphs = okt.morphs(review, stem=True) # 토큰화
+        temp_X = ' '.join([word for word in morphs if not word in stopwords]) # 불용어 제거
+        test_data.append(temp_X)
+        
+        pred_c_lr = naver_count_lr.predict(test_data)
+        pred_c_nb = naver_count_nb.predict(test_data)
+        pred_t_lr = naver_tfid_lr.predict(test_data)
+        pred_t_nb = naver_tfid_nb.predict(test_data)
+        naver_dict = {'label':label, 'pred_c_lr': pred_c_lr[0], 'pred_c_nb':pred_c_nb[0], 'pred_t_lr': pred_t_lr[0], 'pred_t_nb':pred_t_nb[0]}
+        return render_template('advanced/naver_res.html', menu=menu, imdb=test_data[0],
+                                nav=naver_dict, weather=get_weather())
 
 # 20 뉴스그룹
 @aclsf_bp.before_app_first_request

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>네이버 영화평 고급분류 결과</strong>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <table class="table table-borderless">
+            <thead>
+                <tr class="table-success">
+                    <td align=center>레이블</td>
+                    <td>{{nav.label}}</td>
+                </tr>
+            </thead>
+            <tr class="table-warning">
+                <td>CountVectorizer + 로지스틱 분류 결과</td>
+                <td><strong>{{nav.pred_c_lr}}
+                        {% if nav.pred_c_lr %}(긍정){% else %}(부정){% endif %}
+                    </strong></td>
+            </tr>
+            <tr class="table-info">
+                <td>CountVectorizer + 나이브 베이즈 결과</td>
+                <td><strong>{{nav.pred_c_nb}}
+                        {% if nav.pred_c_nb %}(긍정){% else %}(부정){% endif %}
+                    </strong></td>
+            </tr>
+
+            <tr class="table-warning">
+                <td>TfidfVectorizer + 로지스틱 회귀 결과</td>
+                <td><strong>{{nav.pred_t_lr}}
+                        {% if nav.pred_t_lr %}(긍정){% else %}(부정){% endif %}
+                    </strong></td>
+            </tr>
+
+            <tr class="table-info">
+                <td>TfidfVectorizer + 나이브 베이즈 결과</td>
+                <td><strong>{{nav.pred_t_nb}}
+                        {% if nav.pred_t_nb %}(긍정){% else %}(부정){% endif %}
+                    </strong></td>
+            </tr>
+
+            <tr>
+                <td colspan="6" style="text-align: center;">
+                    <button class="btn btn-info" onclick="location.href='/advanced/naver'">재실행</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-1"></div>
+</div>
+{% endblock %}
