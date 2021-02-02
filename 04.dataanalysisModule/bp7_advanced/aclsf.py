@@ -11,7 +11,11 @@ import matplotlib.pyplot as plt
 from my_util.weather import get_weather
 
 aclsf_bp = Blueprint('aclsf_bp', __name__)
+menu = {'ho':0, 'da':0, 'ml':1, 
+        'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
+        'cf':0, 'ac':1, 're':0, 'cu':0, 'st':0, 'nl':0}
 
+# 고급분류
 def get_weather_main():
     ''' weather = None
     try:
@@ -28,9 +32,6 @@ def get_weather_main():
 # 손글씨
 @aclsf_bp.route('/digits', methods=['GET', 'POST'])
 def digits():
-    menu = {'ho':0, 'da':0, 'ml':1, 
-            'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':1, 're':0, 'cu':0, 'st':0}
     if request.method == 'GET':
         return render_template('advanced/digits.html', menu=menu, weather=get_weather())
     else:
@@ -78,10 +79,6 @@ def before_app_first_request():
 
 @aclsf_bp.route('/imdb', methods=['GET', 'POST'])
 def imdb():
-    menu = {'ho':0, 'da':0, 'ml':1, 
-            'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':1, 're':0, 'cu':0, 'st':0}
-
     if request.method == 'GET':
         return render_template('advanced/imdb.html', menu=menu, weather=get_weather())
     else:
@@ -130,10 +127,6 @@ def before_app_first_request():
 
 @aclsf_bp.route('/naver', methods=['GET', 'POST'])
 def naver():
-    menu = {'ho':0, 'da':0, 'ml':1, 
-            'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':1, 're':0, 'cu':0, 'st':0}
-
     if request.method == 'GET':
         return render_template('advanced/naver.html', menu=menu, weather=get_weather())
     else:
@@ -175,9 +168,6 @@ def before_app_first_request():
 
 @aclsf_bp.route('/news', methods=['GET', 'POST'])
 def news():
-    menu = {'ho':0, 'da':0, 'ml':1, 
-            'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':1, 're':0, 'cu':0, 'st':0}
     target_names = ['alt.atheism', 'comp.graphics', 'comp.os.ms-windows.misc',
                     'comp.sys.ibm.pc.hardware', 'comp.sys.mac.hardware', 'comp.windows.x',
                     'misc.forsale', 'rec.autos', 'rec.motorcycles', 'rec.sport.baseball',
