@@ -23,7 +23,7 @@ seoul_bp = Blueprint('seoul_bp', __name__)
 def park():
     menu = {'ho':0, 'da':1, 'ml':0, 
             'se':1, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':0, 're':0, 'cu':0, 'st':0}
+            'cf':0, 'ac':0, 're':0, 'cu':0, 'st':0, 'nl':0}
     park_new = pd.read_csv('./static/data/park_info.csv')
     park_gu = pd.read_csv('./static/data/park_gu.csv')
     park_gu.set_index('지역', inplace=True)
@@ -86,7 +86,7 @@ def park():
 def park_gu(option):
     menu = {'ho':0, 'da':1, 'ml':0, 
             'se':1, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':0, 're':0, 'cu':0, 'st':0}
+            'cf':0, 'ac':0, 're':0, 'cu':0, 'st':0, 'nl':0}
     park_new = pd.read_csv('./static/data/park_info.csv')
     park_gu = pd.read_csv('./static/data/park_gu.csv')
     park_gu.set_index('지역', inplace=True)
@@ -121,7 +121,7 @@ def park_gu(option):
 def crime(option):
     menu = {'ho':0, 'da':1, 'ml':0, 
             'se':1, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':0, 're':0, 'cu':0, 'st':0}
+            'cf':0, 'ac':0, 're':0, 'cu':0, 'st':0, 'nl':0}
     crime = pd.read_csv('./static/data/crime_anal_nrom_sort.csv', index_col='구별')
     crime_gu = pd.read_csv('./static/data/범죄현황위도경도.csv')
     geo_str = json.load(open('./static/data/skorea_municipalities_geo_simple.json',
@@ -166,7 +166,7 @@ def crime(option):
 def cctv():
     menu = {'ho':0, 'da':1, 'ml':0, 
             'se':1, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':0, 're':0, 'cu':0, 'st':0}
+            'cf':0, 'ac':0, 're':0, 'cu':0, 'st':0, 'nl':0}
     dst = pd.read_csv('./static/data/cctv_인구수.csv', index_col='구별')
     df_sort = dst.sort_values('오차', ascending=False)
     
