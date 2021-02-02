@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>텍스트 번역</strong>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <form action="/nat_lang/translate" method="post">
+            <table class="table table-borderless">
+                <tr>
+                    <td><label for="text">한글 입력</label></td>
+                    <!-- 텍스트 박스영역 -->
+                    <td><textarea name="text" id="text" cols="70" rows="5" placeholder="한글 Text입력"></textarea></td>
+                </tr>
+                <tr>
+                    <td>언어 선택</td>
+                    <td>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="label" name="label" value="en"
+                                    checked>영어
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="label" name="label" value="ja">일어
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="label" name="label" value="zh">중국어
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="label" name="label" value="fr">프랑스어
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" id="label" name="label" value="es">스페인어
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <button type="submit" class="btn btn-outline-success mr-2">실행</button>
+                        <button type="reset" class="btn btn-outline-secondary">취소</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="col-1"></div>
+</div>
+{% endblock %}

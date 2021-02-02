@@ -11,6 +11,7 @@ t.html
 covid.db
 model/
 03.DataAnalysisModule/ 
+keys/
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
 

@@ -12,6 +12,7 @@ from bp7_advanced.aclsf import aclsf_bp
 from bp8_regression.stock import stock_bp
 from bp8_regression.rgrs import rgrs_bp
 from bp9_clustering.clus import clus_bp
+from bpa_nat_lang.nl import nl_bp
 from my_util.weather import get_weather
 
 app = Flask(__name__)
@@ -27,6 +28,7 @@ app.register_blueprint(aclsf_bp, url_prefix='/advanced')
 app.register_blueprint(stock_bp, url_prefix='/stock')
 app.register_blueprint(rgrs_bp, url_prefix='/regression')
 app.register_blueprint(clus_bp, url_prefix='/clustering')
+app.register_blueprint(nl_bp, url_prefix='/nat_lang')
 
 # 로그인 
 with open('./logging.json', 'r') as file:
@@ -51,7 +53,7 @@ def get_weather_main():
 def index():
     menu = {'ho':1, 'da':0, 'ml':0, 
             'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':0, 're':0, 'cu':0, 'st':0}
+            'cf':0, 'ac':0, 're':0, 'cu':0, 'st':0, 'nl':0}
     return render_template('index.html', menu=menu, weather=get_weather_main())
 
 
