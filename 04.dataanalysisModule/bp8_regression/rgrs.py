@@ -12,6 +12,9 @@ import pandas_datareader as pdr
 from my_util.weather import get_weather
 
 rgrs_bp = Blueprint('rgrs_bp', __name__)
+menu = {'ho':0, 'da':0, 'ml':1, 
+            'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
+            'cf':0, 'ac':0, 're':1, 'cu':0, 'st':0, 'nl':0}
 
 def get_weather_main():
     ''' weather = None
@@ -28,12 +31,8 @@ def get_weather_main():
 
 @rgrs_bp.route('/diabetes', methods=['GET', 'POST'])
 def diabetes():
-    menu = {'ho':0, 'da':0, 'ml':1, 
-            'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':0, 're':1, 'cu':0, 'st':0}
-
     if request.method == 'GET':
-            return render_template('regression/diabetes.html', menu=menu, weather=get_weather())
+        return render_template('regression/diabetes.html', menu=menu, weather=get_weather())
     else:
         # pass
         index = int(request.form['index'] or '0')
