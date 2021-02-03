@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block weather %} {{ weather|safe() }} {% endblock %}
 {% block subtitle %}
-<strong>텍스트 번역</strong>
+<strong>텍스트 감성 분석</strong>
 {% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-1"></div>
     <div class="col-10">
-        <form action="/nat_lang/translate" method="post">
+        <form action="/nat_lang/emotion" method="post">
             <table class="table table-borderless">
                 <tr>
                     <td><label for="text">한글 입력</label></td>
@@ -21,27 +21,12 @@
                         <div class="form-check-inline">
                             <label class="form-check-label">
                                 <input type="radio" class="form-check-input" id="label" name="label" value="en"
-                                    checked>영어
+                                    checked>한 -> 영
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" id="label" name="label" value="jp">일어
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" id="label" name="label" value="cn">중국어
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" id="label" name="label" value="fr">프랑스어
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" id="label" name="label" value="es">스페인어
+                                <input type="radio" class="form-check-input" id="label" name="label" value="ko">영 -> 한
                             </label>
                         </div>
                     </td>

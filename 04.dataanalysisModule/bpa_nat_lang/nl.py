@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, session, g
 from flask import current_app
-import os, joblib, requests, json
+import os, joblib, requests, json, re
 from urllib.parse import quote
+from konlpy.tag import Okt
 import pandas as pd
 import numpy as np
 from my_util.weather import get_weather
@@ -25,7 +26,7 @@ def get_weather_main():
     return weather
 
 @nl_bp.route('/translate', methods=['GET', 'POST'])
-def diabetes():
+def translate():
     if request.method == 'GET':
         return render_template('nat_lang/nl.html', menu=menu, weather=get_weather())
     else:
@@ -34,30 +35,21 @@ def diabetes():
 
         # 네이버 파파고
         with open('static/keys/papago_key.json') as nkey:
-            json_str = nkey.read(100)
-        json_obj = json.loads(json_str)
+            json_obj = json.load(nkey)
         client_id = list(json_obj.keys())[0]
         client_secret = json_obj[client_id]
         n_url = "https://naveropenapi.apigw.ntruss.com/nmt/v1/translation"
-        n_target = {'en': 'en', 'ja':'ja', 'zh':'zh-CN', 'fr':'fr', 'es':'es'}
+        n_mapping = {'en':'en', 'jp':'ja', 'cn':'zh-CN', 'fr':'fr', 'es':'es'}
         val = {
             "source": 'ko',
-            "target": n_target[label],
+            "target": n_mapping[label],
             "text": text
         }
-        
         headers = {
             "X-NCP-APIGW-API-KEY-ID": client_id,
             "X-NCP-APIGW-API-KEY": client_secret
         }
-        response = requests.post(n_url, data=val, headers=headers)
-        rescode = response.status_code
-        if rescode == 200:
-            print(response.text)
-        else:
-            print("Error : " + response.text)
-        
-        result = response.json()
+        result = requests.post(n_url, data=val, headers=headers).json()
         n_text = result['message']['result']['translatedText']
 
         # 카카오
@@ -65,9 +57,8 @@ def diabetes():
             kai_key = kfile.read(100)
         text = text.replace('\n',''); text = text.replace('\r','')
         k_url = f'https://dapi.kakao.com/v2/translation/translate?query={quote(text)}&src_lang=kr&target_lang={label}'
-        result = requests.get(k_url, 
-                    headers={"Authorization": "KakaoAK "+ kai_key}).json()
-
+        result = requests.get(k_url,
+                                headers={"Authorization": "KakaoAK "+kai_key}).json()
         tr_text_list = result['translated_text'][0]
         k_translated_text = '\n'.join([tmp_text for tmp_text in tr_text_list])
 
@@ -81,7 +72,7 @@ def diabetes():
         result = requests.get(generate_url(text, 'kr', k_target[label]), 
                     headers={"Authorization": "KakaoAK "+ kai_key}).json()
 
-        kaka_text = result['translated_text'][0][0] '''
+        kaka_text = result['translatedtext'][0][0] '''
 
 
         n_dt = {'text':text, 'n_text':n_text, 'kaka_text':k_translated_text}
@@ -126,3 +117,58 @@ def tts():
         return render_template('nat_lang/tts_res.html', menu=menu, weather=get_weather_main(),
                                 res=val, mtime=mtime)
 
+# 외국어 감성분석
+@nl_bp.route('/emotion', methods=['GET', 'POST'])
+def emotion():
+    if request.method == 'GET':
+        return render_template('nat_lang/emotion.html', menu=menu, weather=get_weather_main())
+    else:
+        text = request.form['text']
+
+        # 카카오 언어감지
+        with open('static/keys/kakaoaikey.txt') as kfile:
+            kai_key = kfile.read(100)
+        k_url = f'https://dapi.kakao.com/v3/translation/language/detect?query={quote(text)}'
+        result = requests.get(k_url,
+                                headers={"Authorization": "KakaoAK "+ kai_key}).json()
+        lang = result['language_info'][0]['code']
+
+        # 네이버 파파고
+        with open('static/keys/papago_key.json') as nkey:
+            json_obj = json.load(nkey)
+        client_id = list(json_obj.keys())[0]
+        client_secret = json_obj[client_id]
+        url = "https://naveropenapi.apigw.ntruss.com/nmt/v1/translation"
+        headers = {
+            "X-NCP-APIGW-API-KEY-ID": client_id,
+            "X-NCP-APIGW-API-KEY": client_secret
+        }
+        if lang == 'kr':
+            val = {"source": 'ko', "target": 'en', "text": text}
+        else:
+            val = {"source": 'en', "target": 'ko', "text": text}
+        result = requests.post(url, data=val, headers=headers).json()
+        tr_text = result['message']['result']['translatedText']
+
+        okt = Okt()
+        stopwords = ['의','가','이','은','들','는','좀','잘','걍','과','도','를','으로','자','에','와','한','하다','을']
+        if lang == 'kr':
+            review = re.sub("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]", "", text)
+        else:
+            review = re.sub("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]", "", tr_text)
+        morphs = okt.morphs(review, stem=True) # 토큰화
+        ko_review = ' '.join([word for word in morphs if not word in stopwords]) # 불용어 제거
+        en_review = tr_text if lang == 'kr' else text
+
+        naver_tfidf_nb = joblib.load('static/model/naver_tfid_nb.pkl')
+        imdb_tfidf_lr = joblib.load('static/model/imdb_tfid_lr.pkl')
+        pred_ko = '긍정' if naver_tfidf_nb.predict([ko_review])[0] else '부정'
+        pred_en = '긍정' if imdb_tfidf_lr.predict([en_review])[0] else '부정'
+
+        if lang == 'kr':
+            res = {'src_text':text, 'dst_text':tr_text, 'src_pred':pred_ko, 'dst_pred':pred_en}
+        else:
+            res = {'src_text':text, 'dst_text':tr_text, 'src_pred':pred_en, 'dst_pred':pred_ko}
+
+        return render_template('nat_lang/emotion_res.html', res=res,
+                                menu=menu, weather=get_weather_main())
