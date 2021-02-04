@@ -72,12 +72,8 @@ def diabetes():
 
 @rgrs_bp.route('/iris', methods=['GET', 'POST'])
 def iris():
-    menu = {'ho':0, 'da':0, 'ml':1, 
-            'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':0, 're':1, 'cu':0, 'st':0}
-
     if request.method == 'GET':
-            return render_template('regression/iris.html', menu=menu, weather=get_weather())
+        return render_template('regression/iris.html', menu=menu, weather=get_weather())
     else:
         # pass
         index = int(request.form['index'] or '0')
@@ -113,10 +109,6 @@ def iris():
 
 @rgrs_bp.route('/boston', methods=['GET', 'POST'])
 def boston():
-    menu = {'ho':0, 'da':0, 'ml':1, 
-            'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':0,
-            'cf':0, 'ac':0, 're':1, 'cu':0, 'st':0}
-
     if request.method == 'GET':
         feature_list = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE',
                         'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT']
@@ -145,3 +137,54 @@ def boston():
                                 res=result_dict, org=org)
 
 kospi_dict, kosdaq_dict, nyse_dict, nasdaq_dict = {}, {}, {}, {}
+
+# 주가정보 불러오기
+kospi_dict, kosdaq_dict = {}, {}
+@rgrs_bp.before_app_first_request
+def before_app_first_request():
+    kospi = pd.read_csv('./static/data/KOSPI.csv', dtype={'종목코드': str})
+    for i in kospi.index:
+        kospi_dict[kospi['종목코드'][i]] = kospi['기업명'][i]
+    kosdaq = pd.read_csv('./static/data/KOSDAQ.csv', dtype={'종목코드': str})
+    for i in kosdaq.index:
+        kosdaq_dict[kosdaq['종목코드'][i]] = kosdaq['기업명'][i]
+
+@rgrs_bp.route('/stock', methods=['GET', 'POST'])
+def stock():
+    if request.method == 'GET':
+        return render_template('regression/stock.html', menu=menu, weather=get_weather(),
+                                kospi=kospi_dict, kosdaq=kosdaq_dict)
+    else:
+        market = request.form['market']
+        if market == 'KS':
+            code = request.form['kospi_code']
+            company = kospi_dict[code]
+            code += '.KS'
+        else:
+            code = request.form['kosdaq_code']
+            company = kosdaq_dict[code]
+            code += '.KQ'
+        learn_period = int(request.form['learn'])
+        pred_period = int(request.form['pred'])
+        today = datetime.now()
+        start_learn = today - timedelta(days=learn_period*365)
+        end_learn = today - timedelta(days=1)
+
+        stock_data = pdr.DataReader(code, data_source='yahoo', start=start_learn, end=end_learn)
+        current_app.logger.debug(f"get stock data: {code}")
+        df = pd.DataFrame({'ds': stock_data.index, 'y': stock_data.Close})
+        df.reset_index(inplace=True)
+        del df['Date']
+
+        model = Prophet(daily_seasonality=True)
+        model.fit(df)
+        future = model.make_future_dataframe(periods=pred_period)
+        forecast = model.predict(future)
+
+        fig = model.plot(forecast);
+        img_file = os.path.join(current_app.root_path, 'static/img/stock.png')
+        fig.savefig(img_file)
+        mtime = int(os.stat(img_file).st_mtime)
+
+        return render_template('regression/stock_res.html', menu=menu, weather=get_weather(), 
+                                mtime=mtime, company=company, code=code)

@@ -9,7 +9,7 @@ from my_util.weather import get_weather
 
 stock_bp = Blueprint('stock_bp', __name__) # 원래의 templates 위치에서
 
-# 주가정보 불러오기
+''' # 주가정보 불러오기
 kospi_dict, kosdaq_dict = {}, {}
 @stock_bp.before_app_first_request
 def before_app_first_request():
@@ -61,4 +61,4 @@ def stock():
         mtime = int(os.stat(img_file).st_mtime)
 
         return render_template('stock/stock_res.html', menu=menu, weather=get_weather(), 
-                                mtime=mtime, company=company, code=code)
+                                mtime=mtime, company=company, code=code) '''
