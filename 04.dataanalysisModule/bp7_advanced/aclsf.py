@@ -11,8 +11,12 @@ from PIL import Image
 import cv2
 import os, joblib, re
 import pandas as pd
+import numpy as np
+import urllib3, json, base64
+from PIL import Image, ImageDraw, ImageFont
 import matplotlib.pyplot as plt
 from my_util.weather import get_weather
+
 
 aclsf_bp = Blueprint('aclsf_bp', __name__)
 menu = {'ho':0, 'da':0, 'ml':1, 
@@ -103,6 +107,7 @@ def imdb():
         imdb_dict = {'label':label, 'pred_c_lr': pred_c_lr[0], 'pred_t_lr': pred_t_lr[0]}
         return render_template('advanced/imdb_res.html', menu=menu, imdb=test_data[0],
                                 ies=imdb_dict, weather=get_weather())
+# else 두번째                            
 """ else:
         test_data = []
         label = '직접 확인'
@@ -113,7 +118,6 @@ def imdb():
             label = '긍정' if df_test.sentiment[index] else '부정'
         else:
             test_data.append(request.form['review'])
-
         pred_cl = '긍정' if imdb_count_lr.predict(test_data)[0] else '부정'
         pred_tl = '긍정' if imdb_tfidf_lr.predict(test_data)[0] else '부정'
         result_dict = {'label':label, 'pred_cl':pred_cl, 'pred_tl':pred_tl}
@@ -200,7 +204,7 @@ def news():
         return render_template('advanced/news_res.html', menu=menu, news=df.data[index],
                                 res=result_dict, weather=get_weather())
 
-
+# 이미지 분류
 @aclsf_bp.route('/image', methods=['GET', 'POST'])
 def image():
     if request.method == 'GET':
@@ -223,9 +227,56 @@ def image():
                                 name=label[1], prob=np.round(label[2]*100, 2),
                                 filename=f_img.filename, mtime=mtime)
 
+# 공공인공지능
 @aclsf_bp.route('/imgopen', methods=['GET', 'POST'])
 def imgopen():
     if request.method == 'GET':
         return render_template('advanced/imgopen.html', menu=menu, weather=get_weather())
     else:
-        pass
+        f_img = request.files['image']
+        kfile = open('./static/keys/etri_ai_key.txt')
+        eai_key = kfile.read(100)
+        openApiURL = "http://aiopen.etri.re.kr:8000/ObjectDetect"
+        image_file = os.path.join(current_app.root_path, 'static/upload/') + f_img.filename
+        f_img.save(image_file)
+        _, image_type = os.path.splitext(image_file)
+        image_type = 'jpg' if image_type == '.jfif' else image_type[1:]
+
+        file = open(image_file, 'rb')
+        image_contents = base64.b64encode(file.read()).decode('utf8')
+        request_json = {
+        "request_id": "reserved field",
+        "access_key": eai_key,
+        "argument": {
+            "file": image_contents,
+            "type": image_type
+            }
+        }
+        http = urllib3.PoolManager()
+        response = http.request(
+            "POST",
+            openApiURL,
+            headers={"Content-Type": "application/json; charset=UTF-8"},
+            body=json.dumps(request_json)
+        )
+
+        result = json.loads(response.data)
+        obj_list = result['return_object']['data']
+        image = Image.open(image_file)
+        draw = ImageDraw.Draw(image)
+        for obj in obj_list:
+            name = obj['class']
+            x = int(obj['x'])
+            y = int(obj['y'])
+            w = int(obj['width'])
+            h = int(obj['height'])
+            draw.text((x+10, y+10), name, font=ImageFont.truetype('malgun.ttf', 20), fill=(255,0,0))
+            draw.rectangle(((x, y), (x+w, y+h)), outline=(255,0,0), width=2)
+
+        # plt.savefig(image + image_type);
+        img_file = os.path.join(current_app.root_path, 'static/img/object.png')
+        image.save(img_file);
+        mtime = int(os.stat(img_file).st_mtime)
+    
+        return render_template('advanced/imgopen_res.html', menu=menu, weather=get_weather(),
+                            mtime=mtime)
