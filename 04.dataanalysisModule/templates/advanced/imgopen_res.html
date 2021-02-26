@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block additional_head %}
+<style>
+    td {
+        text-align: center;
+    }
+</style>
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+<strong>공공 인공지능</strong>
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-9">
+        <table class="table">
+            <tr class="d-flex">
+                <td class="col-10">
+                    <img src="{{url_for('static', filename='img/object.png', q=mtime)}}" width="500" alt="인공지능이미지">
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <button class="btn btn-primary" onclick="location.href='/advanced/imgopen'">재실행</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-2"></div>
+</div>
+{% endblock %}
