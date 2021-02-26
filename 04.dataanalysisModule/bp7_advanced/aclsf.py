@@ -222,3 +222,10 @@ def image():
         return render_template('advanced/image_res.html', menu=menu, weather=get_weather(),
                                 name=label[1], prob=np.round(label[2]*100, 2),
                                 filename=f_img.filename, mtime=mtime)
+
+@aclsf_bp.route('/imgopen', methods=['GET', 'POST'])
+def imgopen():
+    if request.method == 'GET':
+        return render_template('advanced/imgopen.html', menu=menu, weather=get_weather())
+    else:
+        pass
